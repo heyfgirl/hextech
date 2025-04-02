@@ -2,9 +2,11 @@ package api
 
 import (
 	"fmt"
+	"hextech/common/request"
 	"hextech/common/response"
-	"hextech/model"
 	"hextech/utils/jwt"
+
+	"hextech/common/schema"
 
 	"github.com/gin-gonic/gin"
 )
@@ -70,13 +72,14 @@ func (ctrl *Controller) Login(c *gin.Context) {
 // @Description 获取当前登录用户信息
 // @Tags        用户接口
 // @Produce     json
-// @Success     200 {object} map[string]interface{}
+// @Success     200 {object} schema.UserInfo
 // @Router      /user/info [get]
 func (ctrl *Controller) GetUserInfo(c *gin.Context) {
 	// 这里应该从token中获取用户信息
+	username := request.GetUserName(c)
 
-	userInfo := model.User{
-		Username: "示例用户",
+	userInfo := schema.UserInfo{
+		Username: username,
 	}
 
 	response.OkWithDetailed(userInfo, "获取成功", c)

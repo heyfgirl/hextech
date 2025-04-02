@@ -5,8 +5,6 @@ import (
 	"hextech/middleware"
 
 	"github.com/gin-gonic/gin"
-	swaggerfiles "github.com/swaggo/files"
-	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // @title           API文档
@@ -14,16 +12,18 @@ import (
 // @description     这是一个示例API服务器。
 // @host           localhost:8080
 // @BasePath       /
-func Routers(ctrl *api.Controller) *gin.Engine {
-	r := gin.Default()
+func Routers(r *gin.Engine, ctrl *api.Controller) *gin.Engine {
+
+	// // 检查 docs.go 文件是否存在
+	// if _, err := os.Stat("docs.go"); err == nil {
+	// 	// docs.go 存在，注册Swagger路由
+	// 	r.GET("/swagger", func(c *gin.Context) {
+	// 		c.Redirect(301, "/swagger/index.html")
+	// 	})
+	// 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
+	// }
 
 	// r.Use(middleware.DefaultLogger())
-
-	// 注册Swagger路由
-	r.GET("/swagger", func(c *gin.Context) {
-		c.Redirect(301, "/swagger/index.html")
-	})
-	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	publicGroup := r.Group(ctrl.Config.System.RouterPrefix)
 	authGroup := r.Group(ctrl.Config.System.RouterPrefix)

@@ -1,3 +1,3 @@
 .PHONY: docs
 docs:
-	swag init --parseDependency --parseInternal 
+	swag init -g docs.go --parseDependency --parseDepth=3

@@ -21,11 +21,7 @@ RUN make -f scaffold.mk vet
 RUN make -f scaffold.mk lint
 RUN make -f scaffold.mk test
 
-# 生成swagger文档
-RUN make -f scaffold.mk docs
 
-# 构建应用
-RUN make -f scaffold.mk build
 
 # 运行阶段
 FROM alpine:latest

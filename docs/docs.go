@@ -38,8 +38,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "type": "object",
-                            "additionalProperties": true
+                            "$ref": "#/definitions/schema.UserInfo"
                         }
                     }
                 }
@@ -147,6 +146,24 @@ var doc = `{
                     "example": "test_user"
                 }
             }
+        },
+        "schema.UserInfo": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }`
@@ -162,12 +179,12 @@ type swaggerInfo struct {
 
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
-	Version:     "1.0",
-	Host:        "",
-	BasePath:    "",
+	Version:     "v1.0",
+	Host:        "localhost:8080",
+	BasePath:    "/api/v1",
 	Schemes:     []string{},
-	Title:       "Hextech API",
-	Description: "Hextech Service API Documentation",
+	Title:       "API服务接口文档",
+	Description: "这是API服务的Swagger文档",
 }
 
 type s struct{}

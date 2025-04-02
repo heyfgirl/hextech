@@ -1,3 +1,4 @@
+basePath: /api/v1
 definitions:
   api.RegisterRequest:
     properties:
@@ -11,8 +12,19 @@ definitions:
     - password
     - username
     type: object
+  schema.UserInfo:
+    properties:
+      id:
+        type: integer
+      username:
+        type: string
+    type: object
+host: localhost:8080
 info:
   contact: {}
+  description: 这是API服务的Swagger文档
+  title: API服务接口文档
+  version: v1.0
 paths:
   /user/info:
     get:
@@ -23,8 +35,7 @@ paths:
         "200":
           description: OK
           schema:
-            additionalProperties: true
-            type: object
+            $ref: '#/definitions/schema.UserInfo'
       summary: 获取用户信息
       tags:
       - 用户接口
@@ -84,4 +95,9 @@ paths:
       summary: 用户注册
       tags:
       - 用户接口
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"
