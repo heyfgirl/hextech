@@ -6,27 +6,22 @@ import (
 	"hextech/common/response"
 	"hextech/utils/jwt"
 
-	"hextech/common/schema"
+	"hextech/schema"
 
 	"github.com/gin-gonic/gin"
 )
-
-type RegisterRequest struct {
-	Username string `json:"username" binding:"required" example:"test_user"`
-	Password string `json:"password" binding:"required" example:"123456"`
-}
 
 // @Summary     用户注册
 // @Description 新用户注册接口
 // @Tags        用户接口
 // @Accept      json
 // @Produce     json
-// @Param       request body RegisterRequest true "注册信息"
+// @Param       request body schema.RegisterRequest true "注册信息"
 // @Success     200 {object} map[string]interface{}
 // @Failure     400 {object} map[string]interface{}
 // @Router      /user/register [post]
 func (ctrl *Controller) Register(c *gin.Context) {
-	var req RegisterRequest
+	var req schema.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return
@@ -41,12 +36,12 @@ func (ctrl *Controller) Register(c *gin.Context) {
 // @Tags        用户接口
 // @Accept      json
 // @Produce     json
-// @Param       request body RegisterRequest true "登录信息"
+// @Param       request body schema.RegisterRequest true "登录信息"
 // @Success     200 {object} map[string]interface{}
 // @Failure     400 {object} map[string]interface{}
 // @Router      /user/login [post]
 func (ctrl *Controller) Login(c *gin.Context) {
-	var req RegisterRequest
+	var req schema.RegisterRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
 		fmt.Println(err)
 		response.FailWithMessage(err.Error(), c)

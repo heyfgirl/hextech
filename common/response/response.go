@@ -22,7 +22,7 @@ const (
 // 返回结果 业务逻辑
 func Result(code int, data any, msg string, c *gin.Context) {
 	// 开始时间
-	c.JSON(http.StatusOK, Response{
+	c.AbortWithStatusJSON(http.StatusOK, Response{
 		code,
 		data,
 		msg,
@@ -64,4 +64,5 @@ func NoAuth(message string, c *gin.Context) {
 		nil,
 		message,
 	})
+	c.Abort()
 }
