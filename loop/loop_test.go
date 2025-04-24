@@ -14,9 +14,10 @@ func TestQueueConcurrentCallbackAllDone(t *testing.T) {
 	limit := 2
 
 	var result int64
-	cb := func(t int) {
+	cb := func(t int) error {
 		// 模拟处理
 		atomic.AddInt64(&result, int64(t))
+		return nil
 	}
 	err := QueueConcurrentCallbackAllDone(ctx, arr, limit, cb)
 	if err != nil {

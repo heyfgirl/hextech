@@ -8,20 +8,17 @@ import (
 )
 
 // 并发回调列队，错误不处理
-func QueueConcurrentCallbackAllDone[T any](ctx context.Context, arr []T, limit int, cb func(T)) error {
-	return queueConcurrentCallback(ctx, arr, limit, func(t T) error {
-		cb(t)
-		return nil
-	}, false)
+func QueueConcurrentCallbackAllDone[T any](ctx context.Context, arr []T, limit int, cb func(T) error) error {
+	return queueConcurrentCallback(ctx, arr, limit, cb, true)
 }
 
 // 并发回调列队遇 error 结束
 func QueueConcurrentCallback[T any](ctx context.Context, arr []T, limit int, cb func(T) error) error {
-	return queueConcurrentCallback(ctx, arr, limit, cb, true)
+	return queueConcurrentCallback(ctx, arr, limit, cb, false)
 }
 
 // 并发回调列队
-func queueConcurrentCallback[T any](ctx context.Context, arr []T, limit int, cb func(T) error, all_done bool) error {
+func queueConcurrentCallback[T any](ctx context.Context, arr []T, limit int, cb func(T) error, ig_item_error bool) error {
 	// 需要处理的任务总个数
 	taskTotal := int64(len(arr))
 	// 完成任务的总个数
@@ -43,7 +40,7 @@ func queueConcurrentCallback[T any](ctx context.Context, arr []T, limit int, cb 
 		case ch <- struct{}{}:
 			go func(_t T) {
 				if err := cb(_t); err != nil {
-					if all_done {
+					if !ig_item_error {
 						doneCh <- err
 						return
 					}
