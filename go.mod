@@ -1,3 +1,3 @@
-module holdcloud/hextech
+module hextech
 
 go 1.22.6
