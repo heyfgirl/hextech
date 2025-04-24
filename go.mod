@@ -1,3 +1,3 @@
-module hextech
+module github.com/heyfgirl/hextech
 
-go 1.22.6
+go 1.18
